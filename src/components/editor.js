@@ -1,7 +1,7 @@
 import React from "react";
 import * as firebase from "firebase";
 import Firepad from "firepad";
-
+import PropTypes from "prop-types";
 import "./editor.css";
 
 class Editor extends React.Component {
@@ -16,8 +16,9 @@ class Editor extends React.Component {
       messagingSenderId: "971892271101",
     };
     firebase.initializeApp(config);
-    var firepadRef = firebase.database().ref();
-    console.log(firepadRef);
+
+    var id = this.props.match.params.id;
+    var firepadRef = firebase.database().ref(id);
 
     var codeMirror = window.CodeMirror(document.getElementById("firepad"), {
       lineWrapping: true,
@@ -37,5 +38,13 @@ class Editor extends React.Component {
     );
   }
 }
+
+Editor.propTypes = {
+  match: PropTypes.shape({
+    id: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
+};
 
 export default Editor;
