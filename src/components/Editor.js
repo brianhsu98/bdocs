@@ -2,7 +2,8 @@ import React from "react";
 import * as firebase from "firebase";
 import Firepad from "firepad";
 import PropTypes from "prop-types";
-import "./editor.css";
+import { Container } from "semantic-ui-react";
+import "./Editor.css";
 
 class Editor extends React.Component {
   componentDidMount() {
@@ -27,14 +28,13 @@ class Editor extends React.Component {
     var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, {
       richTextShortcuts: true,
       richTextToolbar: true,
-      defaultText: "Hello World!",
     });
   }
   render() {
     return (
-      <div>
+      <Container>
         <div id="firepad" />
-      </div>
+      </Container>
     );
   }
 }

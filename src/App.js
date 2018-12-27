@@ -1,10 +1,14 @@
 import React, { Component } from "react";
-import "./App.css";
-import WebsiteRouter from "./components/router";
+import Navbar from "./components/Navbar";
+import "semantic-ui-css/semantic.min.css";
 
 class App extends Component {
   render() {
-    return <WebsiteRouter />;
+    return (
+      <div>
+        <Navbar />
+      </div>
+    );
   }
 }
 
