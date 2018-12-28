@@ -8,7 +8,9 @@ import {
   Icon,
   Divider,
 } from "semantic-ui-react";
+import DocumentPrompt from "./DocumentPrompt";
 
+// TODO: Remove commented out button.
 const HomepageHeading = () => (
   <React.Fragment>
     <Segment inverted style={{ padding: "20vh 0em", marginTop: "-15px" }}>
@@ -26,14 +28,14 @@ const HomepageHeading = () => (
           inverted
           textAlign="center"
         />
-
-        <Button size="massive" attached animated primary>
+        <DocumentPrompt />
+        {/* <Button size="massive" attached animated primary>
           <Button.Content visible>Create a document now</Button.Content>
           <Button.Content hidden>
             <Icon name="right arrow" />
             <Icon name="edit" />
           </Button.Content>
-        </Button>
+        </Button> */}
       </Container>
     </Segment>
   </React.Fragment>

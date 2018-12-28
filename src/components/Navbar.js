@@ -3,16 +3,17 @@ import { NavLink } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 import Home from "./Home";
-import NewDocumentPrompt from "./NewDocumentPrompt";
+import DocumentPrompt from "./DocumentPrompt";
 import Editor from "./Editor";
 
 class NavBar extends React.Component {
   render() {
+    // TODO: Remove hidden navbar.
     return (
       <BrowserRouter>
         <div>
           <Switch>
-            <Menu borderless pointing>
+            <Menu borderless pointing style={{ display: "none" }}>
               <Menu.Item as={NavLink} exact to="/">
                 Home
               </Menu.Item>
@@ -22,7 +23,6 @@ class NavBar extends React.Component {
             </Menu>
           </Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/editor/" component={NewDocumentPrompt} />
           <Route path="/editor/:id" component={Editor} />
         </div>
       </BrowserRouter>
