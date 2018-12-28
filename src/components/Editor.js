@@ -1,8 +1,16 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import * as firebase from "firebase";
 import Firepad from "firepad";
 import PropTypes from "prop-types";
-import { Divider, Input, Dimmer, Loader, Container } from "semantic-ui-react";
+import {
+  Form,
+  Divider,
+  Input,
+  Dimmer,
+  Loader,
+  Container,
+} from "semantic-ui-react";
 import "./Editor.css";
 
 class Editor extends React.Component {
@@ -12,9 +20,11 @@ class Editor extends React.Component {
       value: "",
       active: true,
       id: this.props.match.params.id,
+      url: "REPLACEME.com/editor/" + this.props.match.params.id,
     };
     this.getUpdatedTitle = this.getUpdatedTitle.bind(this);
     this.initializeTitleListener = this.initializeTitleListener.bind(this);
+    this.copyToClipboard = this.copyToClipboard.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
   }
 
@@ -37,6 +47,11 @@ class Editor extends React.Component {
   initializeTitleListener() {
     var titleRef = firebase.database().ref(this.state.id + "/title");
     titleRef.on("value", this.getUpdatedTitle);
+  }
+
+  copyToClipboard() {
+    document.getElementById("copy").select();
+    document.execCommand("copy");
   }
 
   componentDidMount() {
@@ -75,14 +90,31 @@ class Editor extends React.Component {
         <Dimmer active={this.state.active}>
           <Loader />
         </Dimmer>
-        <Input
-          transparent
-          placeholder="Title..."
-          size="massive"
-          style={{ width: "100%" }}
-          onChange={this.handleTitleChange}
-          value={this.state.value}
-        />
+        <Form>
+          <Form.Group>
+            <Form.Input
+              transparent
+              placeholder="Title..."
+              size="massive"
+              style={{ width: "100%" }}
+              onChange={this.handleTitleChange}
+              value={this.state.value}
+              width={10}
+            />
+            <Form.Input
+              id="copy"
+              action={{
+                color: "teal",
+                labelPosition: "right",
+                icon: "copy",
+                content: "Copy",
+                onClick: this.copyToClipboard,
+              }}
+              width={6}
+              value={this.state.url}
+            />
+          </Form.Group>
+        </Form>
         <Divider />
         <div id="firepad" />
       </Container>
