@@ -2,9 +2,8 @@ import React from "react";
 import * as firebase from "firebase";
 import Firepad from "firepad";
 import PropTypes from "prop-types";
-import { Form, Divider, Dimmer, Loader, Container } from "semantic-ui-react";
+import { Divider, Dimmer, Loader, Container } from "semantic-ui-react";
 import ModeSelector from "./ModeSelector";
-import HelpButton from "./HelpButton";
 import TitleBar from "./TitleBar";
 import "./Editor.css";
 
@@ -18,6 +17,7 @@ class Editor extends React.Component {
       url: process.env.PUBLIC_URL + "/" + this.props.match.params.id,
       session: null,
       mode: "ace/mode/python",
+      firepad: null,
     };
 
     this.getUpdatedTitle = this.getUpdatedTitle.bind(this);
@@ -27,6 +27,21 @@ class Editor extends React.Component {
     this.handleModeChange = this.handleModeChange.bind(this);
     this.getUpdatedMode = this.getUpdatedMode.bind(this);
     this.initializeModeListener = this.initializeModeListener.bind(this);
+    this.onFileUpload = this.onFileUpload.bind(this);
+    this.setFirepadContents = this.setFirepadContents.bind(this);
+  }
+
+  setFirepadContents(e) {
+    this.state.firepad.setText(e.target.result);
+  }
+
+  onFileUpload(e) {
+    var uploadedFile = e.target.files[0];
+    if (uploadedFile) {
+      var readFile = new FileReader();
+      readFile.onload = this.setFirepadContents;
+      readFile.readAsText(uploadedFile);
+    }
   }
 
   handleModeChange(_, data) {
@@ -112,12 +127,14 @@ class Editor extends React.Component {
 
     this.initializeTitleListener();
 
+    var firepad;
+
     if (!this.props.isCode) {
       var codeMirror = window.CodeMirror(document.getElementById("firepad"), {
         lineWrapping: true,
       });
 
-      Firepad.fromCodeMirror(firebaseRef, codeMirror, {
+      firepad = Firepad.fromCodeMirror(firebaseRef, codeMirror, {
         richTextShortcuts: true,
         richTextToolbar: true,
       });
@@ -128,10 +145,14 @@ class Editor extends React.Component {
         session: session,
       });
 
-      Firepad.fromACE(firebaseRef, ace);
+      firepad = Firepad.fromACE(firebaseRef, ace);
 
       this.initializeModeListener();
     }
+
+    this.setState({
+      firepad: firepad,
+    });
 
     this.setState({
       active: false,
@@ -154,6 +175,7 @@ class Editor extends React.Component {
           titleValue={this.state.value}
           onCopyClick={this.copyToClipboard}
           copyURL={this.state.url}
+          onFileUpload={this.onFileUpload}
         />
         <Divider />
 

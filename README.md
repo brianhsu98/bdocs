@@ -18,7 +18,6 @@ To update an already deployed app, run `gcloud app deploy` again
 
 ## To-Do
 
-    - Add option to switch between code editor and normal editor, probably through a small settings widget that expands
     - Spruce up homepage, with options to start new code editor and a new real editor
     - Update document selector to go to code if there is an existing mode choice, and rich text otherwise.
 

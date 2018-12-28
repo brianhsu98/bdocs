@@ -1,6 +1,7 @@
 import React from "react";
 import { Form } from "semantic-ui-react";
 import HelpButton from "./HelpButton";
+import ImportFile from "./ImportFile";
 
 class TitleBar extends React.Component {
   render() {
@@ -31,6 +32,7 @@ class TitleBar extends React.Component {
           />
 
           <HelpButton />
+          <ImportFile onFileUpload={this.props.onFileUpload} />
         </Form.Group>
       </Form>
     );
