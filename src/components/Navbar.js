@@ -8,20 +8,17 @@ import Editor from "./Editor";
 class NavBar extends React.Component {
   render() {
     return (
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <div>
           <Switch>
             <Menu borderless pointing>
-              <Menu.Item as={NavLink} exact to={process.env.PUBLIC_URL + "/"}>
+              <Menu.Item as={NavLink} exact to={"/"}>
                 Home
               </Menu.Item>
             </Menu>
           </Switch>
-          <Route exact path={process.env.PUBLIC_URL + "/"} component={Home} />
-          <Route
-            path={process.env.PUBLIC_URL + "/editor/:id"}
-            component={Editor}
-          />
+          <Route exact path={"/"} component={Home} />
+          <Route path={"/editor/:id"} component={Editor} />
         </div>
       </BrowserRouter>
     );
