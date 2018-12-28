@@ -14,7 +14,7 @@ import {
 class DocumentPrompt extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { inputValue: "" };
+    this.state = { value: "" };
 
     this.newDocument = this.newDocument.bind(this);
     this.findDocument = this.findDocument.bind(this);
@@ -27,7 +27,7 @@ class DocumentPrompt extends React.Component {
 
   getInputValue(e) {
     this.setState({
-      inputValue: e.target.value,
+      value: e.target.value,
     });
   }
 
@@ -51,6 +51,7 @@ class DocumentPrompt extends React.Component {
                 focus
                 placeholder="Document ID"
                 onChange={this.getInputValue.bind(this)}
+                value={this.state.value}
               />
             </Grid.Column>
             <Grid.Column verticalAlign="middle">
