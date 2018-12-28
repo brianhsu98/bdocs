@@ -18,7 +18,14 @@ class NavBar extends React.Component {
             </Menu>
           </Switch>
           <Route exact path={"/"} component={Home} />
-          <Route path={"/editor/:id"} component={Editor} />
+          <Route
+            path={"/editor/:id"}
+            render={props => <Editor {...props} isCode={false} />}
+          />
+          <Route
+            path={"/code/:id"}
+            render={props => <Editor {...props} isCode={true} />}
+          />
         </div>
       </BrowserRouter>
     );

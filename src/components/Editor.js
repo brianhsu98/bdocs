@@ -11,6 +11,8 @@ import {
   Loader,
   Container,
 } from "semantic-ui-react";
+import ModeSelector from "./ModeSelector";
+import HelpButton from "./HelpButton";
 import "./Editor.css";
 
 class Editor extends React.Component {
@@ -20,12 +22,15 @@ class Editor extends React.Component {
       value: "",
       active: true,
       id: this.props.match.params.id,
-      url: "REPLACEME.com/editor/" + this.props.match.params.id,
+      url: process.env.PUBLIC_URL + "/" + this.props.match.params.id,
+      session: null,
+      mode: "ace/mode/python",
     };
     this.getUpdatedTitle = this.getUpdatedTitle.bind(this);
     this.initializeTitleListener = this.initializeTitleListener.bind(this);
     this.copyToClipboard = this.copyToClipboard.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleModeChange = this.handleModeChange.bind(this);
   }
 
   /**
@@ -40,6 +45,12 @@ class Editor extends React.Component {
       .database()
       .ref(this.state.id)
       .update({ title: e.target.value });
+  }
+
+  handleModeChange(_, data) {
+    this.setState({
+      mode: data.value,
+    });
   }
 
   /**
@@ -84,14 +95,24 @@ class Editor extends React.Component {
 
     this.initializeTitleListener(this.state.id);
 
-    var codeMirror = window.CodeMirror(document.getElementById("firepad"), {
-      lineWrapping: true,
-    });
+    if (!this.props.isCode) {
+      var codeMirror = window.CodeMirror(document.getElementById("firepad"), {
+        lineWrapping: true,
+      });
 
-    Firepad.fromCodeMirror(firebaseRef, codeMirror, {
-      richTextShortcuts: true,
-      richTextToolbar: true,
-    });
+      Firepad.fromCodeMirror(firebaseRef, codeMirror, {
+        richTextShortcuts: true,
+        richTextToolbar: true,
+      });
+    } else {
+      var ace = window.ace.edit("firepad");
+      var session = ace.getSession();
+      this.setState({
+        session: session,
+      });
+
+      Firepad.fromACE(firebaseRef, ace);
+    }
 
     this.setState({
       active: false,
@@ -99,6 +120,10 @@ class Editor extends React.Component {
   }
 
   render() {
+    if (!this.state.active && this.props.isCode) {
+      // Does not set mode until component mounted
+      this.state.session.setMode(this.state.mode);
+    }
     return (
       <Container>
         <Dimmer active={this.state.active}>
@@ -129,18 +154,17 @@ class Editor extends React.Component {
               value={this.state.url}
             />
 
-            <Popup trigger={<Button icon="help" />} width={2}>
-              <Popup.Content>
-                <b> Save this link </b> if you want to return to your document.
-                If you do not save your link, you will not be able to return to
-                your document.
-                <br /> <br />
-                To share this document, simply send the link to the other
-                person.
-              </Popup.Content>
-            </Popup>
+            <HelpButton />
           </Form.Group>
         </Form>
+        <Divider />
+
+        <ModeSelector
+          value={this.state.mode}
+          handleModeChange={this.handleModeChange}
+          visible={this.props.isCode}
+        />
+
         <Divider />
         <div id="firepad" />
       </Container>
