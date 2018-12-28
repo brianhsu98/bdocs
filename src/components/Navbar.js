@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 import Home from "./Home";
@@ -12,17 +12,17 @@ class NavBar extends React.Component {
       <BrowserRouter>
         <div>
           <Switch>
-            <Menu>
-              <Menu.Item as={Link} to="/">
+            <Menu borderless pointing>
+              <Menu.Item as={NavLink} exact to="/">
                 Home
               </Menu.Item>
-              <Menu.Item as={Link} to="/editor">
+              <Menu.Item as={NavLink} exact to="/editor">
                 New Document
               </Menu.Item>
             </Menu>
           </Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/editor/" component={NewDocumentPrompt} />
+          <Route exact path="/editor/" component={NewDocumentPrompt} />
           <Route path="/editor/:id" component={Editor} />
         </div>
       </BrowserRouter>
