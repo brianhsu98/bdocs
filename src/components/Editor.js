@@ -2,12 +2,12 @@ import React from "react";
 import * as firebase from "firebase";
 import Firepad from "firepad";
 import PropTypes from "prop-types";
-import { Container } from "semantic-ui-react";
+import { Dimmer, Loader, Container } from "semantic-ui-react";
 import "./Editor.css";
 
 class Editor extends React.Component {
-  componentDidMount() {
-    // TODO: Put into a config file instead of storing here!
+  constructor(props) {
+    super(props);
     var config = {
       apiKey: "AIzaSyBchbuTmDxfcTgGX8ZYC0lolc5Lz5NRpZ8",
       authDomain: "bdocs-e77b5.firebaseapp.com",
@@ -18,6 +18,12 @@ class Editor extends React.Component {
     };
     firebase.initializeApp(config);
 
+    this.state = {
+      initialLoadComplete: false,
+    };
+  }
+
+  componentDidMount() {
     var id = this.props.match.params.id;
     var firepadRef = firebase.database().ref(id);
 
@@ -29,13 +35,28 @@ class Editor extends React.Component {
       richTextShortcuts: true,
       richTextToolbar: true,
     });
+
+    this.setState({
+      initialLoadComplete: true,
+    });
   }
   render() {
-    return (
-      <Container>
-        <div id="firepad" />
-      </Container>
-    );
+    const firepadContentsLoaded = this.state.initialLoadComplete;
+    if (firepadContentsLoaded) {
+      return (
+        <Container>
+          <div id="firepad" />
+        </Container>
+      );
+    } else {
+      return (
+        <Container>
+          <div id="firepad">
+            <Dimmer active />
+          </div>
+        </Container>
+      );
+    }
   }
 }
 
