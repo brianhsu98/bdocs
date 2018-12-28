@@ -2,7 +2,15 @@ import React from "react";
 import * as firebase from "firebase";
 import Firepad from "firepad";
 import PropTypes from "prop-types";
-import { Form, Divider, Dimmer, Loader, Container } from "semantic-ui-react";
+import {
+  Button,
+  Popup,
+  Form,
+  Divider,
+  Dimmer,
+  Loader,
+  Container,
+} from "semantic-ui-react";
 import "./Editor.css";
 
 class Editor extends React.Component {
@@ -114,6 +122,7 @@ class Editor extends React.Component {
               value={this.state.value}
               width={10}
             />
+
             <Form.Input
               id="copy"
               action={{
@@ -126,6 +135,17 @@ class Editor extends React.Component {
               width={6}
               value={this.state.url}
             />
+
+            <Popup trigger={<Button icon="help" />} width={2}>
+              <Popup.Content>
+                <b> Save this link </b> if you want to return to your document.
+                If you do not save your link, you will not be able to return to
+                your document.
+                <br /> <br />
+                To share this document, simply send the link to the other
+                person.
+              </Popup.Content>
+            </Popup>
           </Form.Group>
         </Form>
         <Divider />
