@@ -76,14 +76,7 @@ class Editor extends React.Component {
    * the data from the firestore has been loaded.
    */
   componentDidMount() {
-    var config = {
-      apiKey: "AIzaSyBchbuTmDxfcTgGX8ZYC0lolc5Lz5NRpZ8",
-      authDomain: "bdocs-e77b5.firebaseapp.com",
-      databaseURL: "https://bdocs-e77b5.firebaseio.com",
-      projectId: "bdocs-e77b5",
-      storageBucket: "bdocs-e77b5.appspot.com",
-      messagingSenderId: "971892271101",
-    };
+    var config = JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG);
     if (!firebase.apps.length) {
       firebase.initializeApp(config);
     }
