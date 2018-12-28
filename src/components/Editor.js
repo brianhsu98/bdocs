@@ -2,17 +2,10 @@ import React from "react";
 import * as firebase from "firebase";
 import Firepad from "firepad";
 import PropTypes from "prop-types";
-import {
-  Button,
-  Popup,
-  Form,
-  Divider,
-  Dimmer,
-  Loader,
-  Container,
-} from "semantic-ui-react";
+import { Form, Divider, Dimmer, Loader, Container } from "semantic-ui-react";
 import ModeSelector from "./ModeSelector";
 import HelpButton from "./HelpButton";
+import TitleBar from "./TitleBar";
 import "./Editor.css";
 
 class Editor extends React.Component {
@@ -155,34 +148,13 @@ class Editor extends React.Component {
         <Dimmer active={this.state.active}>
           <Loader />
         </Dimmer>
-        <Form>
-          <Form.Group>
-            <Form.Input
-              transparent
-              placeholder="Title..."
-              size="massive"
-              style={{ width: "100%" }}
-              onChange={this.handleTitleChange}
-              value={this.state.value}
-              width={10}
-            />
 
-            <Form.Input
-              id="copy"
-              action={{
-                color: "teal",
-                labelPosition: "right",
-                icon: "copy",
-                content: "Copy",
-                onClick: this.copyToClipboard,
-              }}
-              width={6}
-              value={this.state.url}
-            />
-
-            <HelpButton />
-          </Form.Group>
-        </Form>
+        <TitleBar
+          onTitleChange={this.handleTitleChange}
+          titleValue={this.state.value}
+          onCopyClick={this.copyToClipboard}
+          copyURL={this.state.url}
+        />
         <Divider />
 
         <ModeSelector
