@@ -9,7 +9,10 @@ import {
 } from "semantic-ui-react";
 import DocumentPrompt from "./DocumentPrompt";
 
-// TODO: Remove commented out button.
+/**
+ * The header of the homepage
+ * Consists of a banner and the buttons.
+ */
 const HomepageHeading = () => (
   <React.Fragment>
     <Segment inverted style={{ padding: "20vh 0em", marginTop: "-15px" }}>

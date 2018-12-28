@@ -1,16 +1,8 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import * as firebase from "firebase";
 import Firepad from "firepad";
 import PropTypes from "prop-types";
-import {
-  Form,
-  Divider,
-  Input,
-  Dimmer,
-  Loader,
-  Container,
-} from "semantic-ui-react";
+import { Form, Divider, Dimmer, Loader, Container } from "semantic-ui-react";
 import "./Editor.css";
 
 class Editor extends React.Component {
@@ -28,6 +20,10 @@ class Editor extends React.Component {
     this.handleTitleChange = this.handleTitleChange.bind(this);
   }
 
+  /**
+   * Updates firebase database and internal state whenever user
+   * changes title input text box.
+   */
   handleTitleChange(e) {
     this.setState({
       value: e.target.value,
@@ -38,22 +34,39 @@ class Editor extends React.Component {
       .update({ title: e.target.value });
   }
 
+  /**
+   * Used to set state, updating the title with the new value from
+   * the firestore.
+   */
   getUpdatedTitle(snapshot) {
     this.setState({
       value: snapshot.val(),
     });
   }
 
+  /**
+   * Creates a listener that looks for title changes/updates.
+   */
   initializeTitleListener() {
     var titleRef = firebase.database().ref(this.state.id + "/title");
     titleRef.on("value", this.getUpdatedTitle);
   }
 
+  /**
+   * Triggered when the user presses the copy button.
+   * Hacky, and not very reacty.
+   */
   copyToClipboard() {
     document.getElementById("copy").select();
     document.execCommand("copy");
   }
 
+  /**
+   * Initializes Firebase, syncs with Firepad stored at the URL parameter ID,
+   * and syncs the title again with the ID.
+   * active is changed to prevent users from inputting changes before
+   * the data from the firestore has been loaded.
+   */
   componentDidMount() {
     var config = {
       apiKey: "AIzaSyBchbuTmDxfcTgGX8ZYC0lolc5Lz5NRpZ8",
@@ -74,7 +87,7 @@ class Editor extends React.Component {
       lineWrapping: true,
     });
 
-    var firepad = Firepad.fromCodeMirror(firebaseRef, codeMirror, {
+    Firepad.fromCodeMirror(firebaseRef, codeMirror, {
       richTextShortcuts: true,
       richTextToolbar: true,
     });

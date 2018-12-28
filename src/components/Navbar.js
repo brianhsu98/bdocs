@@ -7,7 +7,6 @@ import Editor from "./Editor";
 
 class NavBar extends React.Component {
   render() {
-    // TODO: Remove hidden navbar.
     return (
       <BrowserRouter>
         <div>

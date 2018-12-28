@@ -20,19 +20,30 @@ class DocumentPrompt extends React.Component {
     this.findDocument = this.findDocument.bind(this);
   }
 
+  /**
+   * Triggered when the new document button is created.
+   * Creates a new ID, and redirects user to document located there.
+   */
   newDocument(e) {
     let editor_url = "/editor/" + shortid.generate();
     this.props.history.push(editor_url);
   }
 
+  /**
+   * Updates the state's input value whenever the user types something
+   * into the input box.
+   */
   getInputValue(e) {
     this.setState({
       value: e.target.value,
     });
   }
 
+  /**
+   * Given an inputted document ID, redirects user to the desired document.
+   */
   findDocument(e) {
-    let editor_url = "/editor/" + this.state.inputValue;
+    let editor_url = "/editor/" + this.state.value;
     this.props.history.push(editor_url);
   }
 
@@ -54,6 +65,7 @@ class DocumentPrompt extends React.Component {
                 value={this.state.value}
               />
             </Grid.Column>
+
             <Grid.Column verticalAlign="middle">
               <Button
                 content="Create new document"
@@ -63,6 +75,7 @@ class DocumentPrompt extends React.Component {
               />
             </Grid.Column>
           </Grid>
+
           <Divider inverted vertical>
             OR
           </Divider>
