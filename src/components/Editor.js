@@ -26,11 +26,41 @@ class Editor extends React.Component {
       session: null,
       mode: "ace/mode/python",
     };
+
     this.getUpdatedTitle = this.getUpdatedTitle.bind(this);
     this.initializeTitleListener = this.initializeTitleListener.bind(this);
     this.copyToClipboard = this.copyToClipboard.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleModeChange = this.handleModeChange.bind(this);
+    this.getUpdatedMode = this.getUpdatedMode.bind(this);
+    this.initializeModeListener = this.initializeModeListener.bind(this);
+  }
+
+  handleModeChange(_, data) {
+    this.setState({
+      mode: data.value,
+    });
+    firebase
+      .database()
+      .ref(this.state.id)
+      .update({ mode: data.value });
+  }
+
+  getUpdatedMode(snapshot) {
+    var mode;
+    if (snapshot.val() === null) {
+      mode = "ace/mode/python";
+    } else {
+      mode = snapshot.val();
+    }
+    this.setState({
+      mode: mode,
+    });
+  }
+
+  initializeModeListener() {
+    var modeRef = firebase.database().ref(this.state.id + "/mode");
+    modeRef.on("value", this.getUpdatedMode);
   }
 
   /**
@@ -45,12 +75,6 @@ class Editor extends React.Component {
       .database()
       .ref(this.state.id)
       .update({ title: e.target.value });
-  }
-
-  handleModeChange(_, data) {
-    this.setState({
-      mode: data.value,
-    });
   }
 
   /**
@@ -93,7 +117,7 @@ class Editor extends React.Component {
     }
     var firebaseRef = firebase.database().ref(this.state.id);
 
-    this.initializeTitleListener(this.state.id);
+    this.initializeTitleListener();
 
     if (!this.props.isCode) {
       var codeMirror = window.CodeMirror(document.getElementById("firepad"), {
@@ -112,6 +136,8 @@ class Editor extends React.Component {
       });
 
       Firepad.fromACE(firebaseRef, ace);
+
+      this.initializeModeListener();
     }
 
     this.setState({
