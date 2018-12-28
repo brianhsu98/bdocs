@@ -9,15 +9,20 @@ The Firebase config should be stored as a stringified JSON object in an .env fil
 - `yarn start` will run the app in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - `yarn build` will build the app
 
-
 ## Deploying
+
 Currently, the app is hosted on Google App Engine.
-Using the Google Cloud SDK, run
-    - `gcloud init`, and create a configuration using the desired project
-    - `gcloud app deploy` to deploy to web.
+Using the Google Cloud SDK, run - `gcloud init`, and create a configuration using the desired project - `gcloud app deploy` to deploy to web.
 
-To update an already deployed app,  run `gcloud app deploy` again
+To update an already deployed app, run `gcloud app deploy` again
 
+## To-Do
+
+    - Refactor inputs in editor to be separate components
+    - Sync mode choice through firebase
+    - Add option to switch between code editor and normal editor, probably through a small settings widget that expands
+    - Spruce up homepage, with options to start new code editor and a new real editor
+    - Update document selector to go to code if there is an existing mode choice, and rich text otherwise.
 
 ## Roadmap
 
