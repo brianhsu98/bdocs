@@ -1,4 +1,6 @@
 import React from "react";
+import shortid from "shortid";
+import { withRouter } from "react-router";
 import {
   Divider,
   Container,
@@ -6,11 +8,34 @@ import {
   Input,
   Grid,
   Button,
-  Header,
   Icon,
 } from "semantic-ui-react";
 
 class DocumentPrompt extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { inputValue: "" };
+
+    this.newDocument = this.newDocument.bind(this);
+    this.findDocument = this.findDocument.bind(this);
+  }
+
+  newDocument(e) {
+    let editor_url = "/editor/" + shortid.generate();
+    this.props.history.push(editor_url);
+  }
+
+  getInputValue(e) {
+    this.setState({
+      inputValue: e.target.value,
+    });
+  }
+
+  findDocument(e) {
+    let editor_url = "/editor/" + this.state.inputValue;
+    this.props.history.push(editor_url);
+  }
+
   render() {
     return (
       <Container>
@@ -18,13 +43,23 @@ class DocumentPrompt extends React.Component {
           <Grid columns={2} stackable>
             <Grid.Column>
               <Input
-                action={{ color: "blue", content: <Icon name="search" /> }}
+                action={{
+                  onClick: this.findDocument,
+                  color: "blue",
+                  content: <Icon name="search" />,
+                }}
                 focus
                 placeholder="Document ID"
+                onChange={this.getInputValue.bind(this)}
               />
             </Grid.Column>
             <Grid.Column verticalAlign="middle">
-              <Button content="Create new document" icon="edit" size="large" />
+              <Button
+                content="Create new document"
+                icon="edit"
+                size="large"
+                onClick={this.newDocument}
+              />
             </Grid.Column>
           </Grid>
           <Divider inverted vertical>
@@ -36,4 +71,4 @@ class DocumentPrompt extends React.Component {
   }
 }
 
-export default DocumentPrompt;
+export default withRouter(DocumentPrompt);

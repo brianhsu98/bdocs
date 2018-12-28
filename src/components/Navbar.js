@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 import Home from "./Home";
-import DocumentPrompt from "./DocumentPrompt";
 import Editor from "./Editor";
 
 class NavBar extends React.Component {
@@ -13,12 +12,9 @@ class NavBar extends React.Component {
       <BrowserRouter>
         <div>
           <Switch>
-            <Menu borderless pointing style={{ display: "none" }}>
+            <Menu borderless pointing>
               <Menu.Item as={NavLink} exact to="/">
                 Home
-              </Menu.Item>
-              <Menu.Item as={NavLink} exact to="/editor">
-                New Document
               </Menu.Item>
             </Menu>
           </Switch>

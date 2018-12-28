@@ -4,7 +4,6 @@ import {
   Segment,
   Container,
   Header,
-  Button,
   Icon,
   Divider,
 } from "semantic-ui-react";
