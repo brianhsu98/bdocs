@@ -10,11 +10,14 @@ import "./Editor.css";
 class Editor extends React.Component {
   constructor(props) {
     super(props);
+
+    this.constructURL = this.constructURL.bind(this);
+
     this.state = {
       value: "",
       active: true,
       id: this.props.match.params.id,
-      url: process.env.PUBLIC_URL + "/" + this.props.match.params.id,
+      url: this.constructURL(),
       session: null,
       mode: "ace/mode/python",
       firepad: null,
@@ -29,6 +32,17 @@ class Editor extends React.Component {
     this.initializeModeListener = this.initializeModeListener.bind(this);
     this.onFileUpload = this.onFileUpload.bind(this);
     this.setFirepadContents = this.setFirepadContents.bind(this);
+  }
+
+  constructURL() {
+    var url = process.env.REACT_APP_BASE_URL;
+    if (this.props.isCode) {
+      url += "/code/";
+    } else {
+      url += "/editor/";
+    }
+    url += this.props.match.params.id;
+    return url;
   }
 
   setFirepadContents(e) {
@@ -119,6 +133,7 @@ class Editor extends React.Component {
    * the data from the firestore has been loaded.
    */
   componentDidMount() {
+    // Load firebase config from .env file
     var config = JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG);
     if (!firebase.apps.length) {
       firebase.initializeApp(config);
@@ -140,7 +155,12 @@ class Editor extends React.Component {
       });
     } else {
       var ace = window.ace.edit("firepad");
+      ace.setOptions({
+        fontSize: "11pt",
+      });
       var session = ace.getSession();
+
+      // Session is used later to change the mode of the editor
       this.setState({
         session: session,
       });

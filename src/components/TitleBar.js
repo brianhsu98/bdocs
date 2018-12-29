@@ -1,7 +1,7 @@
 import React from "react";
 import { Form } from "semantic-ui-react";
-import HelpButton from "./HelpButton";
 import ImportFile from "./ImportFile";
+import SharingPopupButton from "./SharingPopupButton";
 
 class TitleBar extends React.Component {
   render() {
@@ -18,21 +18,11 @@ class TitleBar extends React.Component {
             width={10}
           />
 
-          <Form.Input
-            id="copy"
-            action={{
-              color: "teal",
-              labelPosition: "right",
-              icon: "copy",
-              content: "Copy",
-              onClick: this.props.onCopyClick,
-            }}
-            width={6}
-            value={this.props.copyURL}
-          />
-
-          <HelpButton />
           <ImportFile onFileUpload={this.props.onFileUpload} />
+          <SharingPopupButton
+            onCopyClick={this.props.onCopyClick}
+            copyURL={this.props.copyURL}
+          />
         </Form.Group>
       </Form>
     );

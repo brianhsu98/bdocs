@@ -19,7 +19,8 @@ To update an already deployed app, run `gcloud app deploy` again
 ## To-Do
 
     - Spruce up homepage, with options to start new code editor and a new real editor
-    - Update document selector to go to code if there is an existing mode choice, and rich text otherwise.
+    - Add previously opened documents to homepage, probably using cookies.
+        - Key should be the title of the document, and the value should be the URL.
 
 ## Roadmap
 
