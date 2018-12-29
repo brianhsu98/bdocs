@@ -30,7 +30,7 @@ class Editor extends React.Component {
     this.handleModeChange = this.handleModeChange.bind(this);
     this.getUpdatedMode = this.getUpdatedMode.bind(this);
     this.initializeModeListener = this.initializeModeListener.bind(this);
-    this.onFileUpload = this.onFileUpload.bind(this);
+    this.onFileDrop = this.onFileDrop.bind(this);
     this.setFirepadContents = this.setFirepadContents.bind(this);
   }
 
@@ -49,8 +49,8 @@ class Editor extends React.Component {
     this.state.firepad.setText(e.target.result);
   }
 
-  onFileUpload(e) {
-    var uploadedFile = e.target.files[0];
+  onFileDrop(files) {
+    var uploadedFile = files[0];
     if (uploadedFile) {
       var readFile = new FileReader();
       readFile.onload = this.setFirepadContents;
@@ -195,7 +195,7 @@ class Editor extends React.Component {
           titleValue={this.state.value}
           onCopyClick={this.copyToClipboard}
           copyURL={this.state.url}
-          onFileUpload={this.onFileUpload}
+          onFileDrop={this.onFileDrop}
         />
         <Divider />
 

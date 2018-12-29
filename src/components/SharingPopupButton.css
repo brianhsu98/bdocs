@@ -1,4 +1,7 @@
 .popup-content {
-  padding: 3em !important;
   border-radius: 15px;
+}
+
+.popup-largePadding {
+  padding: 3em !important;
 }

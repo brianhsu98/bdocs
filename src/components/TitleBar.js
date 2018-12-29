@@ -15,10 +15,10 @@ class TitleBar extends React.Component {
             style={{ width: "100%" }}
             onChange={this.props.onTitleChange}
             value={this.props.titleValue}
-            width={10}
+            width={12}
           />
 
-          <ImportFile onFileUpload={this.props.onFileUpload} />
+          <ImportFile onFileDrop={this.props.onFileDrop} />
           <SharingPopupButton
             onCopyClick={this.props.onCopyClick}
             copyURL={this.props.copyURL}

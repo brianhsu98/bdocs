@@ -11,6 +11,7 @@ class SharingPopupButton extends React.Component {
         modal
         closeOnDocumentClick
         closeOnEscape
+        className="popup-largePadding"
       >
         <Header as="h1"> Sharing/Saving </Header>
         To save the document, you must keep track of this URL.{" "}
