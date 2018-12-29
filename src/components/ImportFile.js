@@ -1,6 +1,6 @@
 import React from "react";
 import Popup from "reactjs-popup";
-import { Container, Icon, Button, Header } from "semantic-ui-react";
+import { Icon, Button, Header } from "semantic-ui-react";
 import Dropzone from "react-dropzone";
 
 import "./ImportFile.css";
