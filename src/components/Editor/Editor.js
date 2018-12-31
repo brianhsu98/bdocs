@@ -58,7 +58,7 @@ class Editor extends React.Component {
       .then(function(snapshot) {
         var title = snapshot.val();
         if (title === null || title === "") {
-          var title = "Document ID: " + id;
+          title = "Document ID: " + id;
         }
         cache.set(relativeURL, {
           title: title,
@@ -67,7 +67,6 @@ class Editor extends React.Component {
         var serializedCache = cache.dump();
         serializedCache = JSON.stringify(serializedCache);
         cookies.set("recentlyAccessedDocuments", serializedCache);
-        console.log(cookies.get("recentlyAccessedDocuments"));
       });
   }
 

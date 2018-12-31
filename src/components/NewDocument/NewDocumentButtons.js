@@ -36,6 +36,7 @@ class NewDocumentButtons extends React.Component {
                 icon="edit"
                 size="massive"
                 onClick={this.newRichTextDocument}
+                primary
               />
             </Grid.Column>
             <Grid.Column verticalAlign="middle">
@@ -44,6 +45,7 @@ class NewDocumentButtons extends React.Component {
                 icon="code"
                 size="massive"
                 onClick={this.newCodeDocument}
+                primary
               />
             </Grid.Column>
           </Grid>
