@@ -4,8 +4,8 @@ import Firepad from "firepad";
 import PropTypes from "prop-types";
 import LRUCache from "lru-cache";
 import { Divider, Dimmer, Loader, Container } from "semantic-ui-react";
-import ModeSelector from "./ModeSelector";
-import TitleBar from "./TitleBar";
+import ModeSelector from "./TitleBar/TitleBarComponents/ModeSelector";
+import TitleBar from "./TitleBar/TitleBar";
 import "./Editor.css";
 
 class Editor extends React.Component {

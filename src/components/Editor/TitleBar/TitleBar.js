@@ -1,7 +1,7 @@
 import React from "react";
 import { Segment, Form } from "semantic-ui-react";
-import ImportFileButton from "./ImportFileButton";
-import SharingPopupButton from "./SharingPopupButton";
+import ImportFileButton from "./TitleBarComponents/ImportFileButton";
+import SharingPopupButton from "./TitleBarComponents/SharingPopupButton";
 
 class TitleBar extends React.Component {
   render() {

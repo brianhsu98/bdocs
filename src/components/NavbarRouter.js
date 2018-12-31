@@ -2,13 +2,13 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
 import { Route, BrowserRouter, Switch } from "react-router-dom";
-import Home from "./Home";
-import Editor from "./Editor";
+import Home from "./Home/Home";
+import Editor from "./Editor/Editor";
 import { withCookies } from "react-cookie";
-import PastDocuments from "./PastDocuments";
-import NewDocument from "./NewDocument";
+import PastDocuments from "./PastDocuments/PastDocuments";
+import NewDocument from "./NewDocument/NewDocument";
 
-class NavBar extends React.Component {
+class NavbarRouter extends React.Component {
   render() {
     return (
       <BrowserRouter>
@@ -52,4 +52,4 @@ class NavBar extends React.Component {
   }
 }
 
-export default withCookies(NavBar);
+export default withCookies(NavbarRouter);

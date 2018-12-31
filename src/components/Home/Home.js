@@ -7,8 +7,7 @@ import {
   Icon,
   Divider,
 } from "semantic-ui-react";
-import HomepageOptionSelector from "./HomepageOptionSelector";
-import NewDocumentButtons from "./NewDocumentButtons";
+import NewDocumentButtons from "../NewDocument/NewDocumentButtons";
 
 /**
  * The header of the homepage

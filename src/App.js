@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import Navbar from "./components/Navbar";
+import NavbarRouter from "./components/NavbarRouter";
 import "semantic-ui-css/semantic.min.css";
 
 class App extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <NavbarRouter />
       </div>
     );
   }
