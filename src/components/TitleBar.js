@@ -1,5 +1,5 @@
 import React from "react";
-import { Form } from "semantic-ui-react";
+import { Segment, Form } from "semantic-ui-react";
 import ImportFileButton from "./ImportFileButton";
 import SharingPopupButton from "./SharingPopupButton";
 

@@ -45,7 +45,7 @@ class Editor extends React.Component {
   setCookies() {
     var cookies = this.props.cookies;
     var cookieContents = cookies.get("recentlyAccessedDocuments");
-    var cache = new LRUCache({ max: 20 });
+    var cache = new LRUCache({ max: 50 });
     var relativeURL = this.state.url.substr(this.state.url.indexOf("/"));
     var id = this.state.id;
     if (cookieContents !== null && cookieContents !== undefined) {
