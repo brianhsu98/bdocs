@@ -1,6 +1,6 @@
 import React from "react";
 import LRUCache from "lru-cache";
-import { List, Container } from "semantic-ui-react";
+import { Header, Segment, List, Container } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 class PastDocuments extends React.Component {
@@ -44,11 +44,29 @@ class PastDocuments extends React.Component {
   render() {
     var pastDocumentsList = this.getPastDocuments();
     return (
-      <Container>
-        <List relaxed animated>
-          {pastDocumentsList}
-        </List>
-      </Container>
+      <div>
+        <Segment inverted style={{ padding: "8vh 0em", marginTop: "-15px" }}>
+          <Container>
+            <Header
+              as="h1"
+              content="Recently Opened Documents"
+              style={{ fontSize: "4em" }}
+              inverted
+            />
+            <Header
+              as="h3"
+              content="Your previously accessed 
+            documents. Most recently opened document come first."
+              inverted
+            />
+          </Container>
+        </Segment>
+        <Container>
+          <List divided relaxed animated>
+            {pastDocumentsList}
+          </List>
+        </Container>
+      </div>
     );
   }
 }

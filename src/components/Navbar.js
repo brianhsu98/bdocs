@@ -6,6 +6,7 @@ import Home from "./Home";
 import Editor from "./Editor";
 import { withCookies } from "react-cookie";
 import PastDocuments from "./PastDocuments";
+import NewDocument from "./NewDocument";
 
 class NavBar extends React.Component {
   render() {
@@ -16,6 +17,9 @@ class NavBar extends React.Component {
             <Menu borderless pointing>
               <Menu.Item as={NavLink} exact to={"/"}>
                 Home
+              </Menu.Item>
+              <Menu.Item as={NavLink} to={"/editor"}>
+                Editor
               </Menu.Item>
               <Menu.Item as={NavLink} to={"/pastDocuments"}>
                 Past Documents
@@ -41,6 +45,7 @@ class NavBar extends React.Component {
               <PastDocuments {...props} cookies={this.props.cookies} />
             )}
           />
+          <Route exact path={"/editor"} component={NewDocument} />
         </div>
       </BrowserRouter>
     );

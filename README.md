@@ -21,6 +21,9 @@ To update an already deployed app, run `gcloud app deploy` again
     - Spruce up homepage, with options to start new code editor and a new real editor
     - Add previously opened documents to homepage, probably using cookies.
         - Key should be the title of the document, and the value should be the URL.
+    - Refactor the components into folders, grouped by page
+    - Add accounts, and keep track of each account's documents.
+    - Add password protection
 
 ## Roadmap
 
