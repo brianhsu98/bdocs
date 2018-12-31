@@ -1,6 +1,6 @@
 import React from "react";
 import LRUCache from "lru-cache";
-import { Container } from "semantic-ui-react";
+import { List, Container } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 class PastDocuments extends React.Component {
@@ -11,7 +11,6 @@ class PastDocuments extends React.Component {
 
   getPastDocuments() {
     var cookieContents = this.props.cookies.get("recentlyAccessedDocuments");
-    console.log(cookieContents);
     if (cookieContents === null || cookieContents === undefined) {
       return <div>No past documents!</div>;
     }
@@ -21,11 +20,22 @@ class PastDocuments extends React.Component {
 
     var pastDocuments = [];
     cache.forEach((value, key) => {
-      console.log(value);
+      var iconName;
+      if (key.includes("code")) {
+        iconName = "code file";
+      } else {
+        iconName = "file alternate outline";
+      }
       pastDocuments.push(
-        <li key={key}>
-          <Link to={value}>{value}</Link>
-        </li>
+        <List.Item>
+          <List.Icon size="large" name={iconName} />
+          <List.Content>
+            <List.Header>
+              <Link to={key}>{value.title}</Link>
+            </List.Header>
+            <List.Description>Last opened: {value.lastOpened}</List.Description>
+          </List.Content>
+        </List.Item>
       );
     });
     return pastDocuments;
@@ -33,7 +43,13 @@ class PastDocuments extends React.Component {
 
   render() {
     var pastDocumentsList = this.getPastDocuments();
-    return <Container>{pastDocumentsList}</Container>;
+    return (
+      <Container>
+        <List relaxed animated>
+          {pastDocumentsList}
+        </List>
+      </Container>
+    );
   }
 }
 

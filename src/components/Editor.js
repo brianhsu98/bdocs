@@ -58,12 +58,16 @@ class Editor extends React.Component {
       .then(function(snapshot) {
         var title = snapshot.val();
         if (title === null || title === "") {
-          var title = "Document ID " + id;
+          var title = "Document ID: " + id;
         }
-        cache.set(relativeURL, snapshot.val());
+        cache.set(relativeURL, {
+          title: title,
+          lastOpened: new Date().toLocaleString(),
+        });
         var serializedCache = cache.dump();
         serializedCache = JSON.stringify(serializedCache);
         cookies.set("recentlyAccessedDocuments", serializedCache);
+        console.log(cookies.get("recentlyAccessedDocuments"));
       });
   }
 
@@ -240,7 +244,7 @@ class Editor extends React.Component {
    * document name.
    */
   componentWillUnmount() {
-    this.setCookies(this.state.id);
+    this.setCookies();
   }
 
   render() {

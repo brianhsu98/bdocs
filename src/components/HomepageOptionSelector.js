@@ -14,36 +14,17 @@ import {
 class HomepageOptionSelector extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: "" };
-
-    this.newDocument = this.newDocument.bind(this);
-    this.findDocument = this.findDocument.bind(this);
+    this.newRichTextDocument = this.newRichTextDocument.bind(this);
+    this.newCodeDocument = this.newCodeDocument.bind(this);
   }
 
-  /**
-   * Triggered when the new document button is created.
-   * Creates a new ID, and redirects user to document located there.
-   */
-  newDocument(e) {
+  newRichTextDocument() {
     let editor_url = "/editor/" + shortid.generate();
     this.props.history.push(editor_url);
   }
 
-  /**
-   * Updates the state's input value whenever the user types something
-   * into the input box.
-   */
-  getInputValue(e) {
-    this.setState({
-      value: e.target.value,
-    });
-  }
-
-  /**
-   * Given an inputted document ID, redirects user to the desired document.
-   */
-  findDocument(e) {
-    let editor_url = "/editor/" + this.state.value;
+  newCodeDocument() {
+    let editor_url = "/code/" + shortid.generate();
     this.props.history.push(editor_url);
   }
 
@@ -52,33 +33,34 @@ class HomepageOptionSelector extends React.Component {
       <Container>
         <Segment placeholder textAlign="center" inverted>
           <Grid columns={2} stackable>
-            <Grid.Column>
-              <Input
-                action={{
-                  onClick: this.findDocument,
-                  color: "blue",
-                  content: <Icon name="search" />,
-                }}
-                focus
-                placeholder="Document ID"
-                onChange={this.getInputValue.bind(this)}
-                value={this.state.value}
-              />
-            </Grid.Column>
-
-            <Grid.Column verticalAlign="middle">
+            <Grid.Row>
+              <Grid.Column verticalAlign="middle">
+                <Button
+                  content="Create new rich text document"
+                  icon="edit"
+                  size="massive"
+                  onClick={this.newRichTextDocument}
+                />
+              </Grid.Column>
+              <Grid.Column verticalAlign="middle">
+                <Button
+                  content="Create new coding document"
+                  icon="edit"
+                  size="massive"
+                  onClick={this.newCodeDocument}
+                />
+              </Grid.Column>
+            </Grid.Row>
+            <Divider />
+            <Grid.Row>
               <Button
-                content="Create new document"
-                icon="edit"
-                size="large"
-                onClick={this.newDocument}
+                content="Past Documents"
+                icon="history"
+                size="massive"
+                onClick={() => this.props.history.push("/pastDocuments")}
               />
-            </Grid.Column>
+            </Grid.Row>
           </Grid>
-
-          <Divider inverted vertical>
-            OR
-          </Divider>
         </Segment>
       </Container>
     );

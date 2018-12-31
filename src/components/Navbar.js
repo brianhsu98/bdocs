@@ -17,6 +17,9 @@ class NavBar extends React.Component {
               <Menu.Item as={NavLink} exact to={"/"}>
                 Home
               </Menu.Item>
+              <Menu.Item as={NavLink} to={"/pastDocuments"}>
+                Past Documents
+              </Menu.Item>
             </Menu>
           </Switch>
           <Route exact path={"/"} component={Home} />

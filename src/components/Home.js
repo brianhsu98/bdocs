@@ -31,13 +31,6 @@ const HomepageHeading = () => (
           textAlign="center"
         />
         <HomepageOptionSelector />
-        {/* <Button size="massive" attached animated primary>
-          <Button.Content visible>Create a document now</Button.Content>
-          <Button.Content hidden>
-            <Icon name="right arrow" />
-            <Icon name="edit" />
-          </Button.Content>
-        </Button> */}
       </Container>
     </Segment>
   </React.Fragment>
