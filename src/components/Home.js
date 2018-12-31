@@ -7,7 +7,7 @@ import {
   Icon,
   Divider,
 } from "semantic-ui-react";
-import DocumentPrompt from "./DocumentPrompt";
+import HomepageOptionSelector from "./HomepageOptionSelector";
 
 /**
  * The header of the homepage
@@ -30,7 +30,7 @@ const HomepageHeading = () => (
           inverted
           textAlign="center"
         />
-        <DocumentPrompt />
+        <HomepageOptionSelector />
         {/* <Button size="massive" attached animated primary>
           <Button.Content visible>Create a document now</Button.Content>
           <Button.Content hidden>

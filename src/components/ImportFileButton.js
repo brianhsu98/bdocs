@@ -3,9 +3,9 @@ import Popup from "reactjs-popup";
 import { Icon, Button, Header } from "semantic-ui-react";
 import Dropzone from "react-dropzone";
 
-import "./ImportFile.css";
+import "./ImportFileButton.css";
 
-class ImportFile extends React.Component {
+class ImportFileButton extends React.Component {
   render() {
     return (
       <Popup
@@ -42,4 +42,4 @@ class ImportFile extends React.Component {
   }
 }
 
-export default ImportFile;
+export default ImportFileButton;

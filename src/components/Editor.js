@@ -38,21 +38,29 @@ class Editor extends React.Component {
 
   /**
    * Appends the ID with the corresponding title to a LRUCache stored
-   * in a title.
+   * in a cookie. Queries firebase database for most recent title.
+   * This function is called twice: once when a component is loaded, and once
+   * when a component is unmounted.
    */
-  setCookies(id) {
+  setCookies() {
     var cookies = this.props.cookies;
     var cookieContents = cookies.get("recentlyAccessedDocuments");
     var cache = new LRUCache({ max: 20 });
+    var relativeURL = this.state.url.substr(this.state.url.indexOf("/"));
+    var id = this.state.id;
     if (cookieContents !== null && cookieContents !== undefined) {
       cache.load(cookieContents);
     }
     firebase
       .database()
-      .ref(this.state.id + "/title")
+      .ref(id + "/title")
       .once("value")
       .then(function(snapshot) {
-        cache.set(id, snapshot.val());
+        var title = snapshot.val();
+        if (title === null || title === "") {
+          var title = "Document ID " + id;
+        }
+        cache.set(relativeURL, snapshot.val());
         var serializedCache = cache.dump();
         serializedCache = JSON.stringify(serializedCache);
         cookies.set("recentlyAccessedDocuments", serializedCache);
@@ -224,7 +232,7 @@ class Editor extends React.Component {
     });
 
     // Updates the recently used documents with this document once opened.
-    this.setCookies(this.state.id);
+    this.setCookies();
   }
 
   /**

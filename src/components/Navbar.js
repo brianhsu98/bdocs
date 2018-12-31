@@ -5,11 +5,12 @@ import { Route, BrowserRouter, Switch } from "react-router-dom";
 import Home from "./Home";
 import Editor from "./Editor";
 import { withCookies } from "react-cookie";
+import PastDocuments from "./PastDocuments";
 
 class NavBar extends React.Component {
   render() {
     return (
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <BrowserRouter>
         <div>
           <Switch>
             <Menu borderless pointing>
@@ -18,11 +19,7 @@ class NavBar extends React.Component {
               </Menu.Item>
             </Menu>
           </Switch>
-          <Route
-            exact
-            path={"/"}
-            render={props => <Home {...props} cookies={this.props.cookies} />}
-          />
+          <Route exact path={"/"} component={Home} />
           <Route
             path={"/editor/:id"}
             render={props => (
@@ -33,6 +30,12 @@ class NavBar extends React.Component {
             path={"/code/:id"}
             render={props => (
               <Editor {...props} isCode={true} cookies={this.props.cookies} />
+            )}
+          />
+          <Route
+            path={"/pastDocuments"}
+            render={props => (
+              <PastDocuments {...props} cookies={this.props.cookies} />
             )}
           />
         </div>

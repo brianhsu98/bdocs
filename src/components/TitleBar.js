@@ -1,6 +1,6 @@
 import React from "react";
 import { Form } from "semantic-ui-react";
-import ImportFile from "./ImportFile";
+import ImportFileButton from "./ImportFileButton";
 import SharingPopupButton from "./SharingPopupButton";
 
 class TitleBar extends React.Component {
@@ -18,7 +18,7 @@ class TitleBar extends React.Component {
             width={12}
           />
 
-          <ImportFile onFileDrop={this.props.onFileDrop} />
+          <ImportFileButton onFileDrop={this.props.onFileDrop} />
           <SharingPopupButton
             onCopyClick={this.props.onCopyClick}
             copyURL={this.props.copyURL}

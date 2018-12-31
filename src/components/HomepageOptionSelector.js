@@ -11,7 +11,7 @@ import {
   Icon,
 } from "semantic-ui-react";
 
-class DocumentPrompt extends React.Component {
+class HomepageOptionSelector extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: "" };
@@ -85,4 +85,4 @@ class DocumentPrompt extends React.Component {
   }
 }
 
-export default withRouter(DocumentPrompt);
+export default withRouter(HomepageOptionSelector);
