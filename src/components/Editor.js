@@ -2,6 +2,7 @@ import React from "react";
 import * as firebase from "firebase";
 import Firepad from "firepad";
 import PropTypes from "prop-types";
+import LRUCache from "lru-cache";
 import { Divider, Dimmer, Loader, Container } from "semantic-ui-react";
 import ModeSelector from "./ModeSelector";
 import TitleBar from "./TitleBar";
@@ -14,7 +15,7 @@ class Editor extends React.Component {
     this.constructURL = this.constructURL.bind(this);
 
     this.state = {
-      value: "",
+      title: "",
       active: true,
       id: this.props.match.params.id,
       url: this.constructURL(),
@@ -32,8 +33,34 @@ class Editor extends React.Component {
     this.initializeModeListener = this.initializeModeListener.bind(this);
     this.onFileDrop = this.onFileDrop.bind(this);
     this.setFirepadContents = this.setFirepadContents.bind(this);
+    this.setCookies = this.setCookies.bind(this);
   }
 
+  /**
+   * Appends the ID with the corresponding title to a LRUCache stored
+   * in a title.
+   */
+  setCookies(id) {
+    var cookies = this.props.cookies;
+    var cookieContents = cookies.get("recentlyAccessedDocuments");
+    var cache = new LRUCache({ max: 20 });
+    if (cookieContents !== null && cookieContents !== undefined) {
+      cache.load(cookieContents);
+    }
+    firebase
+      .database()
+      .ref(this.state.id + "/title")
+      .once("value")
+      .then(function(snapshot) {
+        cache.set(id, snapshot.val());
+        var serializedCache = cache.dump();
+        serializedCache = JSON.stringify(serializedCache);
+        cookies.set("recentlyAccessedDocuments", serializedCache);
+      });
+  }
+
+  /**
+   * Constructs the URL containing this document. */
   constructURL() {
     var url = process.env.REACT_APP_BASE_URL;
     if (this.props.isCode) {
@@ -45,10 +72,18 @@ class Editor extends React.Component {
     return url;
   }
 
+  /**
+   * Passed to ImportFile component.
+   * Called when a user drags a new file into the box.
+   */
   setFirepadContents(e) {
     this.state.firepad.setText(e.target.result);
   }
 
+  /**
+   * Given an array of files, extracts the text of the first
+   * file. Used in the ImportFile component.
+   */
   onFileDrop(files) {
     var uploadedFile = files[0];
     if (uploadedFile) {
@@ -58,6 +93,10 @@ class Editor extends React.Component {
     }
   }
 
+  /**
+   * When mode is changed, update the firebase and local state.
+   * Used in the ModeSelector component.
+   */
   handleModeChange(_, data) {
     this.setState({
       mode: data.value,
@@ -68,6 +107,9 @@ class Editor extends React.Component {
       .update({ mode: data.value });
   }
 
+  /**
+   * Synchronizes mode between between documents using FIrebase.
+   */
   getUpdatedMode(snapshot) {
     var mode;
     if (snapshot.val() === null) {
@@ -80,6 +122,9 @@ class Editor extends React.Component {
     });
   }
 
+  /**
+   * Initializes the mode listener to synchronize mode
+   */
   initializeModeListener() {
     var modeRef = firebase.database().ref(this.state.id + "/mode");
     modeRef.on("value", this.getUpdatedMode);
@@ -91,7 +136,7 @@ class Editor extends React.Component {
    */
   handleTitleChange(e) {
     this.setState({
-      value: e.target.value,
+      title: e.target.value,
     });
     firebase
       .database()
@@ -105,7 +150,7 @@ class Editor extends React.Component {
    */
   getUpdatedTitle(snapshot) {
     this.setState({
-      value: snapshot.val(),
+      title: snapshot.val(),
     });
   }
 
@@ -177,6 +222,17 @@ class Editor extends React.Component {
     this.setState({
       active: false,
     });
+
+    // Updates the recently used documents with this document once opened.
+    this.setCookies(this.state.id);
+  }
+
+  /**
+   * When the document is closed, updates the recently used documents page with the
+   * document name.
+   */
+  componentWillUnmount() {
+    this.setCookies(this.state.id);
   }
 
   render() {
@@ -192,7 +248,7 @@ class Editor extends React.Component {
 
         <TitleBar
           onTitleChange={this.handleTitleChange}
-          titleValue={this.state.value}
+          titleValue={this.state.title}
           onCopyClick={this.copyToClipboard}
           copyURL={this.state.url}
           onFileDrop={this.onFileDrop}
