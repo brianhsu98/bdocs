@@ -96,14 +96,17 @@ class Editor extends React.Component {
   /**
    * Given an array of files, extracts the text of the first
    * file. Used in the ImportFile component.
+   * Close is passed in from the Popup component, and is used to close the popup
+   * once the file is read.
    */
-  onFileDrop(files) {
+  onFileDrop(files, close) {
     var uploadedFile = files[0];
     if (uploadedFile) {
       var readFile = new FileReader();
       readFile.onload = this.setFirepadContents;
       readFile.readAsText(uploadedFile);
     }
+    close();
   }
 
   /**

@@ -15,28 +15,41 @@ class ImportFileButton extends React.Component {
         modal
         className="popup-small"
       >
-        <Dropzone onDrop={this.props.onFileDrop}>
-          {({ getRootProps, getInputProps, isDragActive }) => (
-            <div
-              {...getRootProps()}
-              style={{
-                width: "100%",
-                height: "30vh",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <div>
-                <input {...getInputProps()} />
-                {isDragActive && <Header>Drop files here.</Header>}
-                <Icon name="upload" size="massive" color="blue" />
-                <Header>Click here to add files, or drag files here.</Header>
-              </div>
-            </div>
-          )}
-        </Dropzone>
+        {close => (
+          <div>
+            <Button
+              circular
+              floated="right"
+              onClick={close}
+              basic
+              icon={<Icon name="close" />}
+            />
+            <Dropzone onDrop={e => this.props.onFileDrop(e, close)}>
+              {({ getRootProps, getInputProps, isDragActive }) => (
+                <div
+                  {...getRootProps()}
+                  style={{
+                    width: "100%",
+                    height: "30vh",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <div>
+                    <input {...getInputProps()} />
+                    {isDragActive && <Header>Drop files here.</Header>}
+                    <Icon name="upload" size="massive" color="blue" />
+                    <Header>
+                      Click here to add files, or drag files here.
+                    </Header>
+                  </div>
+                </div>
+              )}
+            </Dropzone>
+          </div>
+        )}
       </Popup>
     );
   }
