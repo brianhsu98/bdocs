@@ -1,7 +1,7 @@
 import React from "react";
-import { Segment, Form } from "semantic-ui-react";
-import ImportFileButton from "./TitleBarComponents/ImportFileButton";
-import SharingPopupButton from "./TitleBarComponents/SharingPopupButton";
+import { Form } from "semantic-ui-react";
+import ImportFileButton from "./ImportFileButton";
+import SharingPopupButton from "./SharingPopupButton";
 
 class TitleBar extends React.Component {
   render() {
@@ -14,7 +14,7 @@ class TitleBar extends React.Component {
             size="massive"
             style={{ width: "100%" }}
             onChange={this.props.onTitleChange}
-            value={this.props.titleValue}
+            value={this.props.title || ''}
             width={12}
           />
 
@@ -28,5 +28,9 @@ class TitleBar extends React.Component {
     );
   }
 }
+
+TitleBar.defaultProps = {
+  title: "",
+};
 
 export default TitleBar;

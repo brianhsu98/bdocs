@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Grid,
-  Button,
-  Divider,
-  Header,
-  Segment,
-  Container,
-} from "semantic-ui-react";
+import { Header, Segment, Container } from "semantic-ui-react";
 import NewDocumentButtons from "./NewDocumentButtons";
 
 class NewDocument extends React.Component {

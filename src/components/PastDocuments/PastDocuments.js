@@ -27,7 +27,7 @@ class PastDocuments extends React.Component {
         iconName = "file alternate outline";
       }
       pastDocuments.push(
-        <List.Item>
+        <List.Item key={key}>
           <List.Icon size="large" name={iconName} />
           <List.Content>
             <List.Header>

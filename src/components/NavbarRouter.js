@@ -13,19 +13,17 @@ class NavbarRouter extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          <Switch>
-            <Menu borderless pointing>
-              <Menu.Item as={NavLink} exact to={"/"}>
-                Home
-              </Menu.Item>
-              <Menu.Item as={NavLink} to={"/editor"}>
-                Editor
-              </Menu.Item>
-              <Menu.Item as={NavLink} to={"/pastDocuments"}>
-                Past Documents
-              </Menu.Item>
-            </Menu>
-          </Switch>
+          <Menu borderless pointing>
+            <Menu.Item as={NavLink} exact to={"/"}>
+              Home
+            </Menu.Item>
+            <Menu.Item as={NavLink} to={"/editor"}>
+              Editor
+            </Menu.Item>
+            <Menu.Item as={NavLink} to={"/pastDocuments"}>
+              Past Documents
+            </Menu.Item>
+          </Menu>
           <Route exact path={"/"} component={Home} />
           <Route
             path={"/editor/:id"}

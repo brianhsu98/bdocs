@@ -20,4 +20,9 @@ class ModeSelector extends React.Component {
     }
   }
 }
+
+ModeSelector.defaultProps = {
+  value: ""
+};
+
 export default ModeSelector;
