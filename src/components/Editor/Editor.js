@@ -1,5 +1,7 @@
 import React from "react";
-import * as firebase from "firebase";
+import * as firebase from "firebase/app";
+import "firebase/database";
+
 import Firepad from "firepad";
 import PropTypes from "prop-types";
 import LRUCache from "lru-cache";
@@ -21,7 +23,7 @@ class Editor extends React.Component {
       url: this.constructURL(),
       session: null,
       mode: "ace/mode/python",
-      firepad: null
+      firepad: null,
     };
 
     this.getUpdatedTitle = this.getUpdatedTitle.bind(this);
@@ -62,7 +64,7 @@ class Editor extends React.Component {
         }
         cache.set(relativeURL, {
           title: title,
-          lastOpened: new Date().toLocaleString()
+          lastOpened: new Date().toLocaleString(),
         });
         var serializedCache = cache.dump();
         serializedCache = JSON.stringify(serializedCache);
@@ -110,7 +112,7 @@ class Editor extends React.Component {
    */
   handleModeChange(_, data) {
     this.setState({
-      mode: data.value
+      mode: data.value,
     });
     firebase
       .database()
@@ -129,7 +131,7 @@ class Editor extends React.Component {
       mode = snapshot.val();
     }
     this.setState({
-      mode: mode
+      mode: mode,
     });
   }
 
@@ -147,7 +149,7 @@ class Editor extends React.Component {
    */
   handleTitleChange(e) {
     this.setState({
-      title: e.target.value
+      title: e.target.value,
     });
     firebase
       .database()
@@ -161,7 +163,7 @@ class Editor extends React.Component {
    */
   getUpdatedTitle(snapshot) {
     this.setState({
-      title: snapshot.val()
+      title: snapshot.val(),
     });
   }
 
@@ -202,23 +204,23 @@ class Editor extends React.Component {
 
     if (!this.props.isCode) {
       var codeMirror = window.CodeMirror(document.getElementById("firepad"), {
-        lineWrapping: true
+        lineWrapping: true,
       });
 
       firepad = Firepad.fromCodeMirror(firebaseRef, codeMirror, {
         richTextShortcuts: true,
-        richTextToolbar: true
+        richTextToolbar: true,
       });
     } else {
       var ace = window.ace.edit("firepad");
       ace.setOptions({
-        fontSize: "11pt"
+        fontSize: "11pt",
       });
       var session = ace.getSession();
 
       // Session is used later to change the mode of the editor
       this.setState({
-        session: session
+        session: session,
       });
 
       firepad = Firepad.fromACE(firebaseRef, ace);
@@ -227,11 +229,11 @@ class Editor extends React.Component {
     }
 
     this.setState({
-      firepad: firepad
+      firepad: firepad,
     });
 
     this.setState({
-      active: false
+      active: false,
     });
 
     // Updates the recently used documents with this document once opened.
@@ -282,9 +284,9 @@ class Editor extends React.Component {
 Editor.propTypes = {
   match: PropTypes.shape({
     id: PropTypes.shape({
-      id: PropTypes.string
-    })
-  })
+      id: PropTypes.string,
+    }),
+  }),
 };
 
 export default Editor;
