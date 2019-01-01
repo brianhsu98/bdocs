@@ -4,7 +4,9 @@ Online, accountless, password-protected collaborative document editor/storage
 
 ## Setup
 
-The Firebase config should be stored as a stringified JSON object in an .env file in the root of the repository. See the current .env file for an example.
+### .env File
+
+Your `.env` file should be in the root of the repository, and should contain two values. First, `REACT_APP_FIREBASE_CONFIG` should contain the stringified JSON object of a firebase config. Secondly, `REACT_APP_BASE_URL` should contain the base URL of the web app. See the `.env` file in the repository for an example.
 
 - `yarn start` will run the app in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 - `yarn build` will build the app
@@ -18,12 +20,11 @@ To update an already deployed app, run `gcloud app deploy` again
 
 ## To-Do
 
-    - Refactor the components into folders, grouped by page
-    - Delete unused code
-    - Add accounts, and keep track of each account's documents.
-    - Add password protection
-    - Add more language syntaxes
-    -
+- Add accounts, and keep track of each account's documents.
+- Add password protection
+- Add close button to upload file
+- Figure out how to make popup close once a file is uploaded
+- Add more settings, like font size, to code editor
 
 ## Roadmap
 
@@ -34,5 +35,5 @@ To update an already deployed app, run `gcloud app deploy` again
 2. Figure out how to host multiple firepads at different URL endpoints
    - Again, using react and random hashes to query a database and see if a document exists
 3. Password-protect URL endpoints
-   - Probably just something basic, like storing a salted+hashed password in the firebase database
-     that we verify against before populating the text editor
+   - Probably just something basic, like storing a salted+hashed password in the firebase database that we verify against before populating the text editor
+4. Add accounts support.
