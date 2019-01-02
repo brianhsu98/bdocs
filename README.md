@@ -20,11 +20,9 @@ To update an already deployed app, run `gcloud app deploy` again
 
 ## To-Do
 
+- Refactor code editor settings bar to a centralized separate component
 - Add accounts, and keep track of each account's documents.
 - Add password protection
-- Add close button to upload file
-- Figure out how to make popup close once a file is uploaded
-- Add more settings, like font size, to code editor
 
 ## Roadmap
 

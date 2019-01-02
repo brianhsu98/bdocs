@@ -16,6 +16,7 @@ import ModeSelector from "./TitleBar/ModeSelector";
 import TitleBar from "./TitleBar/TitleBar";
 import FontSizeSelector from "./TitleBar/FontSizeSelector";
 import ToggleAutocomplete from "./TitleBar/ToggleAutocomplete";
+import TabSizeSelector from "./TitleBar/TabSizeSelector";
 import "./Editor.css";
 
 class Editor extends React.Component {
@@ -35,6 +36,7 @@ class Editor extends React.Component {
       firepad: null,
       fontSize: 12,
       autocompleteOn: true,
+      tabSize: 4,
     };
 
     this.getUpdatedTitle = this.getUpdatedTitle.bind(this);
@@ -48,6 +50,7 @@ class Editor extends React.Component {
     this.setFirepadContents = this.setFirepadContents.bind(this);
     this.setCookies = this.setCookies.bind(this);
     this.handleFontSizeChange = this.handleFontSizeChange.bind(this);
+    this.handleTabSizeChange = this.handleTabSizeChange.bind(this);
     this.handleToggleAutocomplete = this.handleToggleAutocomplete.bind(this);
     this.downloadFile = this.downloadFile.bind(this);
   }
@@ -155,6 +158,12 @@ class Editor extends React.Component {
   handleFontSizeChange(_, data) {
     this.setState({
       fontSize: data.value,
+    });
+  }
+
+  handleTabSizeChange(_, data) {
+    this.setState({
+      tabSize: data.value,
     });
   }
 
@@ -321,6 +330,7 @@ class Editor extends React.Component {
         enableBasicAutocompletion: this.state.autocompleteOn,
         enableSnippets: this.state.autocompleteOn,
         enableLiveAutocompletion: this.state.autocompleteOn,
+        tabSize: this.state.tabSize,
       });
     }
     return (
@@ -349,14 +359,20 @@ class Editor extends React.Component {
           fontSize={this.state.fontSize}
           handleFontSizeChange={this.handleFontSizeChange}
           visible={this.props.isCode}
-          paddingLeft="5px"
+          paddingLeft="1em"
         />
 
         <ToggleAutocomplete
           visible={this.props.isCode}
           handleToggleAutocomplete={this.handleToggleAutocomplete}
           autocompleteOn={this.state.autocompleteOn}
-          paddingLeft="5px"
+          paddingLeft="1em"
+        />
+        <TabSizeSelector
+          visible={this.props.isCode}
+          handleTabSizeChange={this.handleTabSizeChange}
+          tabSize={this.state.tabSize}
+          paddingLeft="1em"
         />
 
         <Divider />
