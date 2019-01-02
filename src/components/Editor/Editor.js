@@ -49,6 +49,7 @@ class Editor extends React.Component {
     this.setCookies = this.setCookies.bind(this);
     this.handleFontSizeChange = this.handleFontSizeChange.bind(this);
     this.handleToggleAutocomplete = this.handleToggleAutocomplete.bind(this);
+    this.downloadFile = this.downloadFile.bind(this);
   }
 
   /**
@@ -104,6 +105,33 @@ class Editor extends React.Component {
    */
   setFirepadContents(e) {
     this.state.firepad.setText(e.target.result);
+  }
+
+  /**
+   * Opens a download prompt for the file being currently edited.
+   * close is used to close the popup box once the download prompt pops up.
+   */
+  downloadFile(close) {
+    var fileName = this.state.title;
+    if (fileName === "" || fileName === undefined) {
+      fileName = this.state.id;
+    }
+    var contents = this.state.firepad.getText();
+
+    var element = document.createElement("a");
+    element.setAttribute(
+      "href",
+      "data:text/plain;charset=utf-8," + encodeURIComponent(contents)
+    );
+    element.setAttribute("download", fileName);
+
+    element.style.display = "none";
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+    // close();
   }
 
   /**
@@ -307,6 +335,7 @@ class Editor extends React.Component {
           onCopyClick={this.copyToClipboard}
           copyURL={this.state.url}
           onFileDrop={this.onFileDrop}
+          downloadFile={this.downloadFile}
         />
         <Divider />
 
@@ -326,6 +355,7 @@ class Editor extends React.Component {
         <ToggleAutocomplete
           visible={this.props.isCode}
           handleToggleAutocomplete={this.handleToggleAutocomplete}
+          autocompleteOn={this.state.autocompleteOn}
           paddingLeft="5px"
         />
 

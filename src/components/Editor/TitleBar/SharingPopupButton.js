@@ -1,6 +1,13 @@
 import React from "react";
 import Popup from "reactjs-popup";
-import { Container, Header, Button, Icon, Input } from "semantic-ui-react";
+import {
+  Divider,
+  Container,
+  Header,
+  Button,
+  Icon,
+  Input,
+} from "semantic-ui-react";
 import "./SharingPopupButton.css";
 
 class SharingPopupButton extends React.Component {
@@ -33,7 +40,8 @@ class SharingPopupButton extends React.Component {
                 <Header.Subheader>
                   To share or save this document, <b>share/save this URL.</b> If
                   you do not have this URL, there is no way to return to this
-                  document.
+                  document. Alternatively, you can download the file to your own
+                  computer.
                 </Header.Subheader>
               </Header>
               <Input
@@ -47,7 +55,16 @@ class SharingPopupButton extends React.Component {
                 }}
                 value={this.props.copyURL}
                 fluid
+                primary
               />
+              <Divider />
+              <Button
+                primary
+                fluid
+                onClick={() => this.props.downloadFile(close)}
+              >
+                Download File
+              </Button>
             </Container>
           </div>
         )}

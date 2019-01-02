@@ -14,7 +14,7 @@ class TitleBar extends React.Component {
             size="massive"
             style={{ width: "100%" }}
             onChange={this.props.onTitleChange}
-            value={this.props.title || ''}
+            value={this.props.title || ""}
             width={12}
           />
 
@@ -22,6 +22,7 @@ class TitleBar extends React.Component {
           <SharingPopupButton
             onCopyClick={this.props.onCopyClick}
             copyURL={this.props.copyURL}
+            downloadFile={this.props.downloadFile}
           />
         </Form.Group>
       </Form>
