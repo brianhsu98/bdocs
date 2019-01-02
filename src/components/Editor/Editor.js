@@ -1,3 +1,9 @@
+/** Editor.js
+ * The editor component centrally controls several other components, located in ./TitleBar
+ * The editor contains functions that also handle actions performed by the buttons, using state
+ * to keep track of the title, language mode, and to handle file uploads.
+ */
+
 import React from "react";
 import * as firebase from "firebase/app";
 import "firebase/database";
@@ -8,6 +14,7 @@ import LRUCache from "lru-cache";
 import { Divider, Dimmer, Loader, Container } from "semantic-ui-react";
 import ModeSelector from "./TitleBar/ModeSelector";
 import TitleBar from "./TitleBar/TitleBar";
+import FontSizeSelector from "./TitleBar/FontSizeSelector";
 import "./Editor.css";
 
 class Editor extends React.Component {
@@ -22,8 +29,10 @@ class Editor extends React.Component {
       id: this.props.match.params.id,
       url: this.constructURL(),
       session: null,
+      editor: null,
       mode: "ace/mode/python",
       firepad: null,
+      fontSize: 11,
     };
 
     this.getUpdatedTitle = this.getUpdatedTitle.bind(this);
@@ -36,6 +45,7 @@ class Editor extends React.Component {
     this.onFileDrop = this.onFileDrop.bind(this);
     this.setFirepadContents = this.setFirepadContents.bind(this);
     this.setCookies = this.setCookies.bind(this);
+    this.handleFontSizeChange = this.handleFontSizeChange.bind(this);
   }
 
   /**
@@ -98,6 +108,8 @@ class Editor extends React.Component {
    * file. Used in the ImportFile component.
    * Close is passed in from the Popup component, and is used to close the popup
    * once the file is read.
+   * Close is passed in from the Popup component, and issused to close the popup
+   * once the file is read.
    */
   onFileDrop(files, close) {
     var uploadedFile = files[0];
@@ -107,6 +119,12 @@ class Editor extends React.Component {
       readFile.readAsText(uploadedFile);
     }
     close();
+  }
+
+  handleFontSizeChange(_, data) {
+    this.setState({
+      fontSize: data.value,
+    });
   }
 
   /**
@@ -216,14 +234,12 @@ class Editor extends React.Component {
       });
     } else {
       var ace = window.ace.edit("firepad");
-      ace.setOptions({
-        fontSize: "11pt",
-      });
       var session = ace.getSession();
 
       // Session is used later to change the mode of the editor
       this.setState({
         session: session,
+        editor: ace,
       });
 
       firepad = Firepad.fromACE(firebaseRef, ace);
@@ -255,6 +271,9 @@ class Editor extends React.Component {
     if (!this.state.active && this.props.isCode) {
       // Does not set mode until component mounted
       this.state.session.setMode(this.state.mode);
+      this.state.editor.setOptions({
+        fontSize: this.state.fontSize,
+      });
     }
     return (
       <Container>
@@ -274,6 +293,12 @@ class Editor extends React.Component {
         <ModeSelector
           value={this.state.mode}
           handleModeChange={this.handleModeChange}
+          visible={this.props.isCode}
+        />
+
+        <FontSizeSelector
+          fontSize={this.state.fontSize}
+          handleFontSizeChange={this.handleFontSizeChange}
           visible={this.props.isCode}
         />
 
