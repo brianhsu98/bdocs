@@ -15,6 +15,7 @@ import { Divider, Dimmer, Loader, Container } from "semantic-ui-react";
 import ModeSelector from "./TitleBar/ModeSelector";
 import TitleBar from "./TitleBar/TitleBar";
 import FontSizeSelector from "./TitleBar/FontSizeSelector";
+import ToggleAutocomplete from "./TitleBar/ToggleAutocomplete";
 import "./Editor.css";
 
 class Editor extends React.Component {
@@ -32,7 +33,8 @@ class Editor extends React.Component {
       editor: null,
       mode: "ace/mode/python",
       firepad: null,
-      fontSize: 11,
+      fontSize: 12,
+      autocompleteOn: true,
     };
 
     this.getUpdatedTitle = this.getUpdatedTitle.bind(this);
@@ -46,6 +48,7 @@ class Editor extends React.Component {
     this.setFirepadContents = this.setFirepadContents.bind(this);
     this.setCookies = this.setCookies.bind(this);
     this.handleFontSizeChange = this.handleFontSizeChange.bind(this);
+    this.handleToggleAutocomplete = this.handleToggleAutocomplete.bind(this);
   }
 
   /**
@@ -124,6 +127,12 @@ class Editor extends React.Component {
   handleFontSizeChange(_, data) {
     this.setState({
       fontSize: data.value,
+    });
+  }
+
+  handleToggleAutocomplete(_, data) {
+    this.setState({
+      autocompleteOn: data.checked,
     });
   }
 
@@ -236,6 +245,14 @@ class Editor extends React.Component {
       var ace = window.ace.edit("firepad");
       var session = ace.getSession();
 
+      window.ace.require("ace/ext/language_tools");
+
+      ace.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true,
+      });
+
       // Session is used later to change the mode of the editor
       this.setState({
         session: session,
@@ -273,6 +290,9 @@ class Editor extends React.Component {
       this.state.session.setMode(this.state.mode);
       this.state.editor.setOptions({
         fontSize: this.state.fontSize,
+        enableBasicAutocompletion: this.state.autocompleteOn,
+        enableSnippets: this.state.autocompleteOn,
+        enableLiveAutocompletion: this.state.autocompleteOn,
       });
     }
     return (
@@ -300,6 +320,13 @@ class Editor extends React.Component {
           fontSize={this.state.fontSize}
           handleFontSizeChange={this.handleFontSizeChange}
           visible={this.props.isCode}
+          paddingLeft="5px"
+        />
+
+        <ToggleAutocomplete
+          visible={this.props.isCode}
+          handleToggleAutocomplete={this.handleToggleAutocomplete}
+          paddingLeft="5px"
         />
 
         <Divider />
