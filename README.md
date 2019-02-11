@@ -12,7 +12,9 @@ Your `.env` file should be in the root of the repository, and should contain two
 - `yarn build` will build the app
 
 ## Deploying
-The app is currently hosted on Firebase hosting. 
+The app is currently hosted on Netlify. See the `_redirects` file for getting Netlify working with `react-router`. Besides that, the environment variable for the firebase config needs to be set in the control panel of Netlify.
+
+The app was previously hosted on Firebase.
 To use, run `firebase init` and select hosting, selecting build as the serve directory.
 Then, run `npm run build`, then `firebase deploy` to deploy.
 
