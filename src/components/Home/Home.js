@@ -46,7 +46,7 @@ const HomepageBody = () => (
               Collaborative, real-time code and rich text editing.
             </Header>
             <p style={{ fontSize: "1.33em" }}>
-              Unashamedly ripping off Google Docs since 2018.
+              Choose an option above to get started!
             </p>
           </Grid.Column>
           <Grid.Column floated="right" width={6}>
@@ -74,8 +74,8 @@ const HomepageBody = () => (
             <Icon style={{ marginLeft: "1em" }} name="users" />
           </Header>
           <p style={{ fontSize: "1.33em" }}>
-            Ever wanted to collaborate on a document, but not use Google Docs?
-            You can! Use my thing instead.
+            Ever wanted to work with someone on the same document, whether that be for coding or for normal text editing?
+            You can! 
           </p>
         </Grid.Column>
       </Grid.Row>
