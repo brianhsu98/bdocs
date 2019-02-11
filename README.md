@@ -12,8 +12,11 @@ Your `.env` file should be in the root of the repository, and should contain two
 - `yarn build` will build the app
 
 ## Deploying
+The app is currently hosted on Firebase hosting. 
+To use, run `firebase init` and select hosting, selecting build as the serve directory.
+Then, run `npm run build`, then `firebase deploy` to deploy.
 
-Currently, the app is hosted on Google App Engine.
+The app was previously hosted on Google App Engine.
 Using the Google Cloud SDK, run - `gcloud init`, and create a configuration using the desired project - `gcloud app deploy` to deploy to web.
 
 To update an already deployed app, run `gcloud app deploy` again
